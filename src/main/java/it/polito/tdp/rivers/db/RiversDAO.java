@@ -74,12 +74,12 @@ public class RiversDAO {
 		return null;
 	}
 	
-	public void getAllFlows(PriorityQueue<Flow> coda, int id) {
+	public PriorityQueue<Flow> getAllFlows(int id) {
 		String sql = "SELECT * "
 				+ "FROM flow "
 				+ "WHERE river = ?";
 		
-
+		PriorityQueue<Flow> coda = new PriorityQueue<>();
 		try {
 			Connection conn = DBConnect.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
@@ -92,7 +92,7 @@ public class RiversDAO {
 			}
 
 			conn.close();
-			
+			return coda;
 		} catch (SQLException e) {
 			throw new RuntimeException("SQL Error");
 		}

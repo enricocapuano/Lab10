@@ -66,7 +66,28 @@ public class FXMLController {
 
     @FXML
     void doSimula(ActionEvent event) {
-
+    	if(boxRiver.getValue() == null) {
+    		txtResult.setText("Selezionare un fiume");
+    		return;
+    	}
+    	int id = boxRiver.getValue().getId();
+    	float fMed = model.getInfoRiver(id).getMedia();
+    	float k = 0;
+    	try {
+    		k = Float.parseFloat(txtK.getText());
+    	}catch(NumberFormatException e) {
+    		txtResult.setText("Il parametro k deve essere un numero maggiore di 0");
+    		return;
+    	}
+    	if(k <= 0) {
+    		txtResult.setText("Il valore di k deve essere maggiore di 0");
+    		return;
+    	}
+    	
+    	model.run(id, k, fMed);
+    	String m = ""+model.getCMed();
+    	String g = ""+model.getGiorni();
+    	txtResult.setText("Numero di giorni senza erogazione: "+g+"\n"+"Occupazione media del bacino: "+m);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

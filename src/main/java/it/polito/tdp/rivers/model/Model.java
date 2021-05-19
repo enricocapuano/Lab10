@@ -8,9 +8,11 @@ import it.polito.tdp.rivers.db.RiversDAO;
 public class Model {
 
 	RiversDAO dao;
+	Simulator sim;
 	
 	public Model() {
 		dao = new RiversDAO();
+		sim = new Simulator();
 	}
 	
 	public List<River> getAllRivers() {
@@ -21,9 +23,19 @@ public class Model {
 		return dao.getInfoRiver(id);
 	}
 	
-	public void getAllFlows(PriorityQueue<Flow> queue, int id) {
-		dao.getAllFlows(queue, id);
+	public PriorityQueue<Flow> getAllFlows(int id) {
+		return dao.getAllFlows(id);
+	}
+	
+	public void run(int id, float k, float fMed) {
+		sim.run(id, k, fMed, this.getAllFlows(id));
+	}
+	
+	public int getGiorni() {
+		return sim.getGiorni();
 	}
 
-	
+	public float getCMed() {
+		return sim.getCMed();
+	}
 }
